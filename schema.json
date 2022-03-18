@@ -1,0 +1,582 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "description": "SON Schema подключения к API",
+    "type": "object",
+    "properties": {
+        "apikey": {
+            "title": "API-key",
+            "description": "Идентификация",
+            "type": "string",
+            "pattern": "^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$",
+            "examples": [
+                "133c87a4-74d9-4c43-8967-b49e2343cc2d"
+            ],
+            "default": ""
+        },
+        "product": {
+            "title": "The product schema",
+            "description": "Продукт в заявке",
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "title": "The amount schema",
+                    "description": "Сумма желаемого займа",
+                    "type": "number",
+                    "minimum": 11000,
+                    "maximum": 100000,
+                    "examples": [
+                        35000
+                    ],
+                    "default": 11000
+                },
+                "period": {
+                    "title": "The period schema",
+                    "description": "Желаемый период в неделях",
+                    "type": "number",
+                    "enum": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        16,
+                        24
+                    ],
+                    "examples": [
+                        16
+                    ],
+                    "default": 4
+                }
+            },
+            "required": [
+                "amount",
+                "period"
+            ],
+            "additionalProperties": true,
+            "examples": [
+                {
+                    "amount": 35000,
+                    "period": 16
+                }
+            ],
+            "default": {
+            }
+        },
+        "client": {
+            "title": "The client schema",
+            "description": "Дааные клиента",
+            "type": "object",
+            "properties": {
+                "last_name": {
+                    "title": "The last_name schema",
+                    "description": "Фамилия",
+                    "type": "string",
+                    "examples": [
+                        "Иванов"
+                    ],
+                    "default": ""
+                },
+                "first_name": {
+                    "title": "The first_name schema",
+                    "description": "Имя",
+                    "type": "string",
+                    "examples": [
+                        "Иван"
+                    ],
+                    "default": ""
+                },
+                "middle_name": {
+                    "title": "The middle_name schema",
+                    "description": "Отчество",
+                    "type": "string",
+                    "examples": [
+                        "Иванович"
+                    ],
+                    "default": ""
+                },
+                "birthday": {
+                    "title": "The birthday schema",
+                    "description": "Дата раждения в формате ДД.ММ.ГГГГ",
+                    "type": "string",
+                    "pattern": "^[0-3][0-9]\\.[01][0-9]\\.[12][0-9]{3}$",
+                    "format": "date",
+                    "examples": [
+                        "01.01.1980"
+                    ],
+                    "default": ""
+                },
+                "birthplace": {
+                    "title": "The birthplace schema",
+                    "description": "Место рождения",
+                    "type": "string",
+                    "examples": [
+                        "Москва"
+                    ],
+                    "default": ""
+                },
+                "email": {
+                    "title": "The email schema",
+                    "description": "Email",
+                    "type": "string",
+                    "format": "email"
+                },
+                "phone": {
+                    "title": "The phone schema",
+                    "description": "Номер телефона в формате 8ХХХХХХХХХХ",
+                    "type": "string",
+                    "pattern": "^8[4789][0-9]{9}$",
+                    "format": "regex",
+                    "examples": [
+                        "89999999999"
+                    ],
+                    "default": ""
+                },
+                "passport": {
+                    "title": "The passport schema",
+                    "description": "Паспортные данные",
+                    "type": "object",
+                    "properties": {
+                        "series": {
+                            "title": "The series schema",
+                            "description": "Серия песпорта",
+                            "type": "string",
+                            "minLength": 4,
+                            "maxLength": 4,
+                            "pattern": "^[0-9]{4}$",
+                            "examples": [
+                                "2222"
+                            ],
+                            "default": ""
+                        },
+                        "number": {
+                            "title": "The number schema",
+                            "description": "Номер паспорта",
+                            "type": "string",
+                            "minLength": 6,
+                            "maxLength": 6,
+                            "pattern": "^[0-9]{6}$",
+                            "examples": [
+                                "333333"
+                            ],
+                            "default": ""
+                        },
+                        "date_of_issue": {
+                            "title": "The date_of_issue schema",
+                            "description": "Дата выдачи в формате ДД.ММ.ГГГГ",
+                            "type": "string",
+                            "pattern": "^[0-3][0-9]\\.[01][0-9]\\.[12][0-9]{3}$",
+                            "format": "date",
+                            "examples": [
+                                "01.01.2002"
+                            ],
+                            "default": ""
+                        },
+                        "organization": {
+                            "title": "The organization schema",
+                            "description": "Организация, которвя выдала паспорт",
+                            "type": "string",
+                            "examples": [
+                                "УВД г. Новокосино Таймырского р-на"
+                            ],
+                            "default": ""
+                        },
+                        "code": {
+                            "title": "The code schema",
+                            "description": "Код поздразделения, выдавшего паспорт (ХХХ-ХХХ)",
+                            "type": "string",
+                            "pattern": "^[0-9]{3}-[0-9]{3}$",
+                            "examples": [
+                                "222-222"
+                            ],
+                            "default": ""
+                        }
+                    },
+                    "required": [
+                        "series",
+                        "number",
+                        "date_of_issue",
+                        "organization",
+                        "code"
+                    ],
+                    "additionalProperties": true,
+                    "examples": [
+                        {
+                            "series": "2222",
+                            "number": "333333",
+                            "date_of_issue": "01.01.2002",
+                            "organization": "УВД г. Новокосино Таймырского р-на",
+                            "code": "222-222"
+                        }
+                    ],
+                    "default": {
+                    }
+                },
+                "addresses": {
+                    "title": "The addresses schema",
+                    "description": "Адреса клиента",
+                    "type": "object",
+                    "properties": {
+                        "registration": {
+                            "title": "The registration schema",
+                            "description": "Адрес регистрации",
+                            "type": "object",
+                            "properties": {
+                                "index": {
+                                    "title": "The index schema",
+                                    "description": "Почтовый индекс",
+                                    "type": "string",
+                                    "minLength": 6,
+                                    "maxLength": 6,
+                                    "pattern": "^[0-9]{6}$",
+                                    "examples": [
+                                        "123123"
+                                    ],
+                                    "default": ""
+                                },
+                                "country": {
+                                    "title": "The country schema",
+                                    "description": "Страна",
+                                    "type": "string",
+                                    "examples": [
+                                        "Россия"
+                                    ],
+                                    "default": ""
+                                },
+                                "region": {
+                                    "title": "The region schema",
+                                    "description": "Регион/Область",
+                                    "type": "string",
+                                    "examples": [
+                                        "Москва"
+                                    ],
+                                    "default": ""
+                                },
+                                "city": {
+                                    "title": "The city schema",
+                                    "description": "Город",
+                                    "type": "string",
+                                    "examples": [
+                                        "Москва"
+                                    ],
+                                    "default": ""
+                                },
+                                "street": {
+                                    "title": "The street schema",
+                                    "description": "Улица",
+                                    "type": "string",
+                                    "examples": [
+                                        "Николоямская"
+                                    ],
+                                    "default": ""
+                                },
+                                "house": {
+                                    "title": "The house schema",
+                                    "description": "Дом",
+                                    "type": "string",
+                                    "examples": [
+                                        "40"
+                                    ],
+                                    "default": ""
+                                },
+                                "building": {
+                                    "title": "The building schema",
+                                    "description": "Корпус/Строение",
+                                    "type": "string",
+                                    "examples": [
+                                        "2"
+                                    ],
+                                    "default": ""
+                                },
+                                "apartment": {
+                                    "title": "The apartment schema",
+                                    "description": "Квартира",
+                                    "type": "string",
+                                    "examples": [
+                                        "112"
+                                    ],
+                                    "default": ""
+                                }
+                            },
+                            "required": [
+                                "index",
+                                "city",
+                                "house"
+                            ],
+                            "additionalProperties": true,
+                            "examples": [
+                                {
+                                    "index": "123123",
+                                    "country": "Россия",
+                                    "region": "Москва",
+                                    "city": "Москва",
+                                    "street": "Николоямская",
+                                    "house": "40",
+                                    "building": "2",
+                                    "apartment": "112"
+                                }
+                            ],
+                            "default": {
+                            }
+                        },
+                        "match_addresses": {
+                            "title": "The match_addresses schema",
+                            "description": "Совпадает ли адрес регистрации с адресом проживания",
+                            "type": "integer",
+                            "enum": [
+                                0,
+                                1
+                            ],
+                            "examples": [
+                                1
+                            ],
+                            "default": 0
+                        },
+                        "residential": {
+                            "title": "The residential schema",
+                            "description": "Адрес проживания. Если match_addresses==1, то заполнение не обязательно",
+                            "type": "object",
+                            "properties": {
+                                "index": {
+                                    "title": "The index schema",
+                                    "description": "Почтовый индекс",
+                                    "type": "string",
+                                    "minLength": 6,
+                                    "maxLength": 6,
+                                    "pattern": "^[0-9]{6}$",
+                                    "examples": [
+                                        ""
+                                    ],
+                                    "default": ""
+                                },
+                                "country": {
+                                    "title": "The country schema",
+                                    "description": "Страна",
+                                    "type": "string",
+                                    "examples": [
+                                        ""
+                                    ],
+                                    "default": ""
+                                },
+                                "region": {
+                                    "title": "The region schema",
+                                    "description": "Регион/Область",
+                                    "type": "string",
+                                    "examples": [
+                                        ""
+                                    ],
+                                    "default": ""
+                                },
+                                "city": {
+                                    "title": "The city schema",
+                                    "description": "Город",
+                                    "type": "string",
+                                    "examples": [
+                                        ""
+                                    ],
+                                    "default": ""
+                                },
+                                "street": {
+                                    "title": "The street schema",
+                                    "description": "Улица",
+                                    "type": "string",
+                                    "examples": [
+                                        ""
+                                    ],
+                                    "default": ""
+                                },
+                                "house": {
+                                    "title": "The house schema",
+                                    "description": "Дом",
+                                    "type": "string",
+                                    "examples": [
+                                        ""
+                                    ],
+                                    "default": ""
+                                },
+                                "building": {
+                                    "title": "The building schema",
+                                    "description": "Строение/Корпус",
+                                    "type": "string",
+                                    "examples": [
+                                        ""
+                                    ],
+                                    "default": ""
+                                },
+                                "apartment": {
+                                    "title": "The apartment schema",
+                                    "description": "Квартира",
+                                    "type": "string",
+                                    "examples": [
+                                        ""
+                                    ],
+                                    "default": ""
+                                }
+                            },
+                            "required": [
+                                "index",
+                                "city",
+                                "house"
+                            ],
+                            "additionalProperties": true,
+                            "examples": [
+                                {
+                                    "index": "",
+                                    "country": "",
+                                    "region": "",
+                                    "city": "",
+                                    "street": "",
+                                    "house": "",
+                                    "building": "",
+                                    "apartment": ""
+                                }
+                            ],
+                            "default": {
+                            }
+                        }
+                    },
+                    "required": [
+                        "registration",
+                        "match_addresses"
+                    ],
+                    "additionalProperties": true,
+                    "examples": [
+                        {
+                            "registration": {
+                                "index": "123123",
+                                "country": "Россия",
+                                "region": "Москва",
+                                "city": "Москва",
+                                "street": "Николоямская",
+                                "house": "40",
+                                "building": "2",
+                                "apartment": "112"
+                            },
+                            "match_addresses": 1,
+                            "residential": {
+                                "index": "",
+                                "country": "",
+                                "region": "",
+                                "city": "",
+                                "street": "",
+                                "house": "",
+                                "building": "",
+                                "apartment": ""
+                            }
+                        }
+                    ],
+                    "default": {
+                    }
+                }
+            },
+            "required": [
+                "last_name",
+                "first_name",
+                "middle_name",
+                "birthday",
+                "birthplace",
+                "phone",
+                "passport",
+                "addresses"
+            ],
+            "additionalProperties": true,
+            "examples": [
+                {
+                    "last_name": "Иванов",
+                    "first_name": "Иван",
+                    "middle_name": "Иванович",
+                    "birthday": "01.01.1980",
+                    "birthplace": "Москва",
+                    "email": "",
+                    "phone": "89999999999",
+                    "passport": {
+                        "series": "2222",
+                        "number": "333333",
+                        "date_of_issue": "01.01.2002",
+                        "organization": "увд вапрпарарарпр",
+                        "code": "222-222"
+                    },
+                    "addresses": {
+                        "registration": {
+                            "index": "123123",
+                            "country": "Россия",
+                            "region": "Москва",
+                            "city": "Москва",
+                            "street": "Николоямская",
+                            "house": "40",
+                            "building": "2",
+                            "apartment": "112"
+                        },
+                        "match_addresses": 1,
+                        "residential": {
+                            "index": "",
+                            "country": "",
+                            "region": "",
+                            "city": "",
+                            "street": "",
+                            "house": "",
+                            "building": "",
+                            "apartment": ""
+                        }
+                    }
+                }
+            ],
+            "default": {
+            }
+        }
+    },
+    "required": [
+        "apikey",
+        "product",
+        "client"
+    ],
+    "additionalProperties": true,
+    "examples": [
+        {
+            "apikey": "133c87a4-74d9-4c43-8967-b49e2343cc2d",
+            "product": {
+                "amount": 35000,
+                "period": 12
+            },
+            "client": {
+                "last_name": "Иванов",
+                "first_name": "Иван",
+                "middle_name": "Иванович",
+                "birthday": "01.01.1980",
+                "birthplace": "Москва",
+                "email": "",
+                "phone": "89999999999",
+                "passport": {
+                    "series": "2222",
+                    "number": "333333",
+                    "date_of_issue": "01.01.2002",
+                    "organization": "УВД г. Новокосино Таймырского р-на",
+                    "code": "222-222"
+                },
+                "addresses": {
+                    "registration": {
+                        "index": "123123",
+                        "country": "Россия",
+                        "region": "Москва",
+                        "city": "Москва",
+                        "street": "Николоямская",
+                        "house": "40",
+                        "building": "2",
+                        "apartment": "112"
+                    },
+                    "match_addresses": 1,
+                    "residential": {
+                        "index": "",
+                        "country": "",
+                        "region": "",
+                        "city": "",
+                        "street": "",
+                        "house": "",
+                        "building": "",
+                        "apartment": ""
+                    }
+                }
+            }
+        }
+    ],
+    "default": {
+    }
+}
