@@ -20,7 +20,7 @@
 		"ext-zip": "*"
     },
 	"suggest": {
-		"paragonie/random_compat": "Provides better randomness in PHP 5.x"
+		"paragonie/random_compat": "Provides better randomness in PHP 7.x"
 	},
 	"require-dev": {
 		"mikey179/vfsstream": "1.1.*"
